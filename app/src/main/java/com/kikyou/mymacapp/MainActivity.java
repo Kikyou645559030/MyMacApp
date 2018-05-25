@@ -6,6 +6,8 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
@@ -21,8 +23,10 @@ public class MainActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		ARouter.init(getApplication());
 		setContentView(R.layout.activity_main);
 		tvMainContent = (TextView) findViewById(R.id.tv_main_content);
+		findViewById(R.id.test).setOnClickListener(v -> ARouter.getInstance().build("/test/two").navigation());
 		//以文件方式存储数据
 		writeData();
 		readData();

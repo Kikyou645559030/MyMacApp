@@ -16,4 +16,12 @@
 		android:layout_height="wrap_content"
 		android:textColor="#000000"
 		android:text="Hello World!"/>
+
+	<Button
+		android:id="@+id/test"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/tv_main_content"
+		android:layout_marginTop="20dp"
+		android:text="测试测试"/>
 </RelativeLayout>
