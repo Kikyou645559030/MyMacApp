@@ -48,6 +48,87 @@ android {
 		sourceCompatibility JavaVersion.VERSION_1_8
 		targetCompatibility JavaVersion.VERSION_1_8
 	}
+
+    println 'groovy print test'
+    // 定义集合
+    def collect = ['123',3,'a']
+    // 添加元素
+    collect.add(9)
+    collect<<'888'
+    collect[collect.size()]=100.0
+    println collect
+    // 根据索引取值
+    println collect[collect.size()-1]
+    println collect[5]
+    // 支持负索引，倒数第n个元素
+    println collect[-1]
+    // 集合运算
+    collect=collect+5 // 添加元素
+    collect=collect-'a' // 删除元素
+    println collect
+    collect=collect-collect[0..4] // 把集合中的前5个元素去掉
+    println collect
+
+    // 定义map
+    def map=['name':'john','age':14,'sex':'boy']
+    // 添加元素
+    map=map+['weight':25]
+    map.put('length',1.27)
+    map.father='Keller'
+    // 索引和key
+    println map['father']
+    println map.length
+
+    // 闭包
+    map.each({key,value->
+        println "$key:$value"})
+    map.each{println it} // it是一个关键字，代表map集合的每个元素
+    map.each({ println it.getKey()+"-->"+it.getValue()})
+    // 定义闭包
+    def say={word->
+        println "Hi,$word!"
+    }
+    say('groovy')
+    say.call('groovy&grails')
+
+    // 支持?.非空调用，和kotlin一样
+//    rs?.next()
+    // Elvis操作符(?:)，也和kotlin一样
+    def elv = null
+    println elv ?: "real null"
+
+    // switch
+    def today = Day.SATURDAY
+    switch (today) {
+        case [Day.SATURDAY, Day.SUNDAY]:// Saturday or Sunday
+            println "Weekends are cool"
+            break
+        case Day.MONDAY..Day.FRIDAY:// a day between Monday and Friday
+            println "Boring work day"
+            break
+        default:
+            println "Are you sure this is a valid day?"
+    }
+
+    // 给String添加扩展方法，和kotlin一样
+    String.metaClass.up = {  delegate.toUpperCase() }
+    // 获取类的属性和方法，类似java反射
+    def msg = "Hello!"
+    msg.metaClass.methods.each { println it.name }
+    msg.metaClass.properties.each { println it.name }
+    //我们可以通过元类判断有没有一个叫up的方法，然后再调用它：
+    if (msg.metaClass.respondsTo(msg, 'up')) {
+        println msg.toUpperCase()
+    }
+    //当然，也可以推断它有没有一个叫bytes的属性：
+    if (msg.metaClass.hasProperty(msg, 'bytes')) {
+        println msg.bytes.encodeBase64()
+    }
+}
+
+// 枚举
+enum Day {
+    SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY
 }
 
 dependencies {
